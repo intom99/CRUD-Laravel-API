@@ -119,4 +119,22 @@ class ArticlesController extends Controller
             }
         }
     }
+
+    public function destroy($id)
+    {
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        if ($article) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data deleted successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data failed to delete'
+            ]);
+        }
+    }
 }
