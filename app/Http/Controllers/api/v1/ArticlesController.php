@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Validator;
 
 class ArticlesController extends Controller
 {
+    public function index()
+    {
+        $article = Article::latest()->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'View all data article',
+            'data' => $article
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make(
@@ -32,13 +42,13 @@ class ArticlesController extends Controller
             ], 401);
         } else {
             // jika berhasil, lanjut create data
-            $post = Article::create([
+            $article = Article::create([
                 'title' => $request->input('title'),
                 'content' => $request->input('content')
             ]);
 
             // mengecek data yang dicreate
-            if ($post) {
+            if ($article) {
                 // jika berhasil
                 return response()->json([
                     'success' => true,
