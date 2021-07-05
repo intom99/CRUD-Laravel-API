@@ -82,4 +82,41 @@ class ArticlesController extends Controller
             ], 401);
         }
     }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required'
+        ], [
+            'title.required' => 'Input data title !',
+            'content.required' => 'Input data content !'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Input data here!',
+                'data' => $validator->errors()
+            ], 401);
+        } else {
+
+            $article = Article::whereId($request->input('id'))->update([
+                'title' => $request->input('title'),
+                'content' => $request->input('content')
+            ]);
+
+            if ($article) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data updated successfully',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data failed to update'
+                ], 401);
+            }
+        }
+    }
 }
