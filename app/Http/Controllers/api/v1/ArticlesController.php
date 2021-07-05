@@ -63,4 +63,23 @@ class ArticlesController extends Controller
             }
         }
     }
+
+    public function show($id)
+    {
+        $article = Article::whereId($id)->first();
+
+        if ($article) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail article',
+                'data' => $article
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data not found',
+                'data' => ''
+            ], 401);
+        }
+    }
 }
