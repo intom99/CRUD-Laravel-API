@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('v1/articles/store', 'api\v1\ArticlesController@store');
+Route::get('v1/articles', 'api\v1\ArticlesController@index');
